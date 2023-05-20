@@ -1,6 +1,6 @@
-export const url_table 			= 'https://api.golemio.cz/v2/pid/departureboards?mode=departures&minutesAfter=600&total=8&ids=';
+export const url_table 			= 'https://api.golemio.cz/v2/pid/departureboards?mode=departures&minutesAfter=600&ids=';
 export const url_stop  		  	= 'https://api.golemio.cz/v2/gtfs/stops?limit=8&names=';
-export const url_table_arival 	= 'https://api.golemio.cz/v2/pid/departureboards?mode=arrivals&minutesAfter=600&total=8&ids=';
+export const url_table_arival 	= 'https://api.golemio.cz/v2/pid/departureboards?mode=arrivals&minutesAfter=600&ids=';
 export const options = {
 	method: 'GET',
 	headers: {

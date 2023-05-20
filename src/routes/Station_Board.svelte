@@ -59,7 +59,7 @@
 
 <div class="board" style:width={$isPhone ? mobile_width: width}>
 <div class="board_header">
-  <h1 style="float:left">{station_name}</h1>
+  <a href={"/single?ids="+ids}><h1 style="float:left">{station_name}</h1></a>
   <p class ="close" on:keydown={close} on:click={close}>X</p>
 </div>
 {#if bus_departures.length>0}
@@ -95,8 +95,10 @@
 {:else}
 <div class="time-table">
   <table>
-    <tr class="first"> 
-      Tady nic nejede voe
+    <tr class="first">
+      <td on:keydown on:click={async ()=>{arivals=!arivals; load()}} style="with:12%">
+        Zádný {arivals?" Příjezd":" Odjezd"}
+      </td>
     </tr>
   </table>
 </div>
@@ -163,6 +165,10 @@
 
 tr.first {
   font-size: x-large;
+}
+
+a{
+  color:#fff;
 }
 
 </style>

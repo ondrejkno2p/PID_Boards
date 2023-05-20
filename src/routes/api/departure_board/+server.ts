@@ -6,12 +6,13 @@ import { options, url_table, url_table_arival} from '../../golem'
 export async function GET({ url }) {
     const ids = String(url.searchParams.get('ids') ?? '');
     const type = String(url.searchParams.get('type') ?? 'departures');
+    const number = String(url.searchParams.get('number') ?? '8');
     let table;
     if(type=='departures'){
-        table = await (await fetch(url_table+ids, options)).json()
+        table = await (await fetch(url_table+ids+"&total="+number, options)).json()
     }
     else if (type=='arivals') {
-        table = await (await fetch(url_table_arival+ids, options)).json()
+        table = await (await fetch(url_table_arival+ids+"&total="+number, options)).json()
     }
     return json(table);
 }
