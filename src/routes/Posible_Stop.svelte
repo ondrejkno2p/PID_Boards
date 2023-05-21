@@ -17,13 +17,7 @@
     $: platform=stop.platform_code;
     import { stations } from "./store";
     function add_station() {
-
-        let l=$stations.length;
-        $posible_stops = $posible_stops.filter(
-        function(value, index, arr){ 
-			  if (value != stop) return value;
-		  }
-      );
+      let l=$stations.length;
       if($isPhone){
         $posible_stops=[];
         $stations[0]=ids;
@@ -36,24 +30,24 @@
     onMount(
       () => {
         if(lines.length==0){
-          $posible_stops = $posible_stops.filter(
-            function(value, index, arr){ 
-			        if (value != stop) return value;
-		        }
-          );
+          // $posible_stops = $posible_stops.filter(
+          //   function(value, index, arr){ 
+			    //     if (value != stop) return value;
+		      //   }
+          // );
         };return 0;
       }
     )
     
 </script>
-{#if !$stations.find((element)=>element==ids)}
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<li style:width={$isPhone?"100%":"400px"} class="posible_stop" on:click={add_station}>
+<li style:width={$isPhone?"100%":"398px"} class="posible_stop" on:click={add_station}>
   <p>
-    {name}({platform})
+    {name}, {platform}
   </p>
   <table class="lines">
+    {#if lines.length>0}
     {#each lines as line}
     <tr>
     <td> 
@@ -75,10 +69,17 @@
     </td>
     </tr>
     {/each}
-
+    {:else}
+    <tr>
+      <td style="width:30%">
+      </td>
+      <td>
+        Konečná
+      </td>
+    </tr>
+    {/if}
   </table>
 </li>
-{/if}
 
 <style>
 li.posible_stop {

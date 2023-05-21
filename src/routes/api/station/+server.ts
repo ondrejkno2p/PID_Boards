@@ -48,6 +48,7 @@ export async function GET({ url }) {
     const station_name = String(url.searchParams.get('station_name') ?? '');
     const url_name = encodeURI(station_name.trim());
     const results = await (await fetch(url_stop+url_name, options)).json()
-    console.log(station_name);
+    // console.log(station_name);
+    // console.log(results);
     return json({search_results:results, static_data:sub_stations_data(station_name)});
 }

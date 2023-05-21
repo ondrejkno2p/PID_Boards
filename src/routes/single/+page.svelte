@@ -2,11 +2,13 @@
     let bus_departures=[];
     export let data;
     let ids=data.ids;
-    import Departure from "./Big_Departure.svelte";
+    import Departure from "../Departure.svelte";
     import {onDestroy, onMount } from 'svelte';
     import {store_cookies} from '../cookies'
+    import {getCookie} from 'typescript-cookie';
     let load_int:number;
     let arivals=false;
+    let platform="";
     async function load(){
       let bus;
       if(arivals){
@@ -16,7 +18,7 @@
         bus = await (await fetch("/api/departure_board/?ids="+ids+"&number="+"18")).json();
       }
       station_name=bus.stops[0].stop_name;
-      // +"("+bus.stops[0].platform_code+")";
+      platform=bus.stops[0].platform_code;
       bus_departures=bus.departures;
     }
     let station_name='Stanice';
@@ -24,6 +26,13 @@
     let test_name = new String;
     onMount(
       async () => {
+        load_cookies();
+        if(stations.find((value)=>{if(value==ids) return value;})){
+        }
+        else{
+          stations[stations.length]=ids;
+        }
+        store_cookies(stations);
         if(load_int>0){
           clearInterval(load_int);
         }
@@ -35,11 +44,22 @@
     onDestroy(() => {
 		clearInterval(load_int);
 	});
+  let stations=[];
+  function load_cookies(){
+    let cookie=getCookie('stations');
+    if(cookie != undefined && cookie?.length>0) {
+      let cookie_split=cookie.split('-');
+      for (let i = 0; i < cookie_split?.length; i++) {
+        stations[i]=cookie_split[i];
+      }
+    }
+  }
+  console.log(stations);
 </script>
 
 <div class="board" style:width={"100%"}>
 <div class="board_header">
-  <a href="/"><h1 style="float:left">{station_name}</h1></a>
+  <a href="/"><h1 style="float:left">{station_name+", "+platform}</h1></a>
 </div>
 {#if bus_departures.length>0}
 <div class="time-table">
@@ -64,8 +84,8 @@
     </tr>
     <!-- svelte-ignore empty-block -->
     
-      {#each bus_departures as dep}
-      <Departure arivals={arivals} departure={dep} ></Departure>
+      {#each bus_departures as dep (dep.trip.id)}
+      <Departure size={1} arivals={arivals} departure={dep} ></Departure>
       {/each}
   </table>
 </div>
@@ -126,6 +146,8 @@
 tr.first {
   font-size: xxx-large;
 }
+
+
 
 a{
     color:#fff;

@@ -1,9 +1,9 @@
 <script lang="ts">
   import {onMount} from 'svelte';
-  import {posible_stops,isPhone } from './store';
+  import {stations, posible_stops,isPhone } from './store';
   import PosibleStop from './Posible_Stop.svelte';
   import StopGroup from './Stop_Group.svelte';
-  import { each } from 'svelte/internal';
+  import { each, onDestroy } from 'svelte/internal';
   import Device from 'svelte-device-info'
 	let station_name = '';
   export let station_names:Array<string>;
@@ -65,9 +65,9 @@
     filtred_stops=new Array<{id:number,name:string}>;
     find_first()
   }
-  onMount(() => {
-    mouted=true});
+  onMount(() => {mouted=true;$posible_stops=[]});
   function getLines(stop_ids:string){
+    
     let station=sub_stations.filter(function(value, index, arr){ 
 			if (value.ids == stop_ids) return value;
 		  }
@@ -78,6 +78,7 @@
       return [];
     }
   }
+  onDestroy(()=> {$posible_stops=[]})
 
 </script>
 <form>
@@ -98,8 +99,10 @@
 <div class="stop_scroll" style:width={$isPhone?"90%":"400px"}>
   <ul class="posible_stop"  style:width={$isPhone?"99%":"398px"}>
     {#each $posible_stops as posible_stop (posible_stop.stop_id)}
+    {#if !$stations.find((element)=>element==posible_stop.stop_id)}
     <PosibleStop lines={getLines(posible_stop.stop_id)} stop={posible_stop}>
     </PosibleStop>
+    {/if}
   {/each}
   </ul>
 </div>
@@ -128,7 +131,7 @@ ul.posible_stop {
 	margin: 0;
 	padding: 0;
 	top: 0;
-	width: 398px;
+	width: 390px;
   height: fit-content;
 	border: 1px solid #ddd;
 	background-color: #ddd;
@@ -155,7 +158,7 @@ button {
   display: block;
   top:150px;
   bottom:8px;
-  width:400px;
+  width:398px;
   overflow-y:scroll;
   position:fixed;
 }

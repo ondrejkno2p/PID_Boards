@@ -8,6 +8,7 @@
     import Device from 'svelte-device-info'
     const width="49%";
     const mobile_width="98%";
+    let platform="";
     let load_int:number;
     let arivals=false;
     if (ids.search('S')>0) {
@@ -34,7 +35,7 @@
         bus = await (await fetch("/api/departure_board/?ids="+ids)).json();
       }
       station_name=bus.stops[0].stop_name;
-      // +"("+bus.stops[0].platform_code+")";
+      platform=bus.stops[0].platform_code;
       bus_departures=bus.departures;
     }
     let station_name='Stanice';
@@ -59,7 +60,7 @@
 
 <div class="board" style:width={$isPhone ? mobile_width: width}>
 <div class="board_header">
-  <a href={"/single?ids="+ids}><h1 style="float:left">{station_name}</h1></a>
+  <a href={"/single?ids="+ids}><h1 style="float:left">{station_name+", "+platform}</h1></a>
   <p class ="close" on:keydown={close} on:click={close}>X</p>
 </div>
 {#if bus_departures.length>0}
@@ -87,8 +88,8 @@
     </tr>
     <!-- svelte-ignore empty-block -->
     
-      {#each bus_departures as dep}
-      <Departure arivals={arivals} departure={dep} ></Departure>
+      {#each bus_departures as dep (dep.trip.id)}
+      <Departure size={0} arivals={arivals} departure={dep} ></Departure>
       {/each}
   </table>
 </div>
