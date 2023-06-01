@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./test.sqlite"
+}
+
+model Stop {
+  gtfsid String     @id
+  name   String
+  lat    Float
+  lon    Float
+  lines  LineInfo[]
+  platform String
+}
+
+model LineInfo {
+  id         Int    @id @default(autoincrement())
+  gtfsid     String
+  name       String
+  headsign   String
+  stop       Stop   @relation(fields: [stop_gtfsid], references: [gtfsid])
+  stop_gtfsid String
+  type        String
+}

@@ -7,6 +7,5 @@ import { options, url_table, url_table_arival,url_trip, url_position,url_stop_by
 export async function GET({ url }) {
     const trip_id = String(url.searchParams.get('trip_id') ?? '');
     const trip = await (await fetch(url_trip+trip_id+"?includeStops=true&includeStopTimes=true", options)).json()
-    
     return json(trip);
 }

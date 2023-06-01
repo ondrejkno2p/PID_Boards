@@ -21,15 +21,12 @@
     stops=results.search_results;
     sub_stations=results.static_data;
     let index=0;
-    for (let i = 0; i < stops.features.length; i++) {
-      if (stops.features[i].properties.stop_id.search('S')>0) {
+    for (let i = 0; i < stops.length; i++) {
+      if (stops[i].gtfsid.search('S')>0) {
         continue;
       }
-      $posible_stops[index]=stops.features[i].properties;
+      $posible_stops[index]=stops[i];
       index+=1;
-    }
-    if (stops.features.length==0){
-      pressed=true;
     }
     filtred_stops=new Array<{id:number,name:string}>;
   }
@@ -37,17 +34,15 @@
     pressed=false;
     $posible_stops=new Array();
   }
-  const filterstations = () => {
+  const filterstations = () => {filtred_stops
     filtred_stops=new Array<{id:number,name:string}>
     let storageArr=new Array<string>;
-    if (station_name) {
-      station_names.forEach(
-        sn => {
-          if (sn.toLowerCase().startsWith(station_name.toLowerCase())) {
-            storageArr = [...storageArr, makeMatchBold(sn)];
-          }
+    if (station_name.length>1) {
+      for (let i = 0; i < station_names.length; i++) {
+        if ((station_names[i]).toLowerCase().startsWith(station_name.toLowerCase())) {
+          storageArr = [...storageArr, makeMatchBold(station_names[i])];
         }
-      );
+      }
     }
     for (let i = 0; i < storageArr.length; i++) {
       filtred_stops[i] = {id:i, name:storageArr[i]};
@@ -67,7 +62,6 @@
   }
   onMount(() => {mouted=true;$posible_stops=[]});
   function getLines(stop_ids:string){
-    
     let station=sub_stations.filter(function(value, index, arr){ 
 			if (value.ids == stop_ids) return value;
 		  }
@@ -98,9 +92,9 @@
 {#if mouted}
 <div class="stop_scroll" style:width={$isPhone?"90%":"400px"}>
   <ul class="posible_stop"  style:width={$isPhone?"99%":"398px"}>
-    {#each $posible_stops as posible_stop (posible_stop.stop_id)}
-    {#if !$stations.find((element)=>element==posible_stop.stop_id)}
-    <PosibleStop lines={getLines(posible_stop.stop_id)} stop={posible_stop}>
+    {#each $posible_stops as posible_stop (posible_stop.gtfsid)}
+    {#if !$stations.find((element)=>element==posible_stop.gtfsid)}
+    <PosibleStop lines={getLines(posible_stop.gtfsid)} stop={posible_stop}>
     </PosibleStop>
     {/if}
   {/each}
@@ -153,6 +147,14 @@ button {
   font-size: 16px;
   background-color: DodgerBlue;
   color: #fff;
+}
+button:active {
+  border: 1px solid transparent;
+  margin-left: 3px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: black;
+  color: #FFF;
 }
 .stop_scroll{
   display: block;

@@ -20,6 +20,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@prisma/client": "^4.14.1",
+		"better-sqlite3": "^8.4.0",
+		"csv-parse": "^5.3.10",
+		"prisma": "^4.14.1",
 		"svelte-device-info": "^1.0.0",
 		"typescript-cookie": "^1.0.6"
 	}

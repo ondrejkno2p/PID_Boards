@@ -1,4 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type {PrismaClient } from "@prisma/client";
+
 // for information about these interfaces
 declare global {
 	namespace App {
@@ -7,10 +10,11 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 	}
+    export var prisma: PrismaClient
 }
 
 export {};
-
+ 
 interface ConversionData {
     success: boolean
     query: {

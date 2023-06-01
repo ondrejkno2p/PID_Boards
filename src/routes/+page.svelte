@@ -8,7 +8,7 @@
     import {getCookie} from 'typescript-cookie';
     import Device from 'svelte-device-info'
     stations.set([])
-    export let data:{station_names:any};
+    export let data:{station_names:Array<string>};
     onMount(()=>{
       $isPhone=Device.isMobile || Device.isPhone || Device.isTablet || Device.isLegacyTouchDevice;
       load_cookies();

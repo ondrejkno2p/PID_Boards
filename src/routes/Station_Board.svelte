@@ -60,7 +60,7 @@
 
 <div class="board" style:width={$isPhone ? mobile_width: width}>
 <div class="board_header">
-  <a href={"/single?ids="+ids}><h1 style="float:left">{station_name+", "+platform}</h1></a>
+  <a href={"/single?ids="+ids}><h1 style="float:left">{station_name}{platform==null?"":", "+platform}</h1></a>
   <p class ="close" on:keydown={close} on:click={close}>X</p>
 </div>
 {#if bus_departures.length>0}
@@ -77,7 +77,7 @@
       {arivals?'Příjezd':'Odjezd'}
       </td>
       {#if !$isPhone}
-      <td style="width:12%;">
+      <td style="width:16%;">
       Za
       </td>
       <td>

@@ -54,12 +54,11 @@
       }
     }
   }
-  console.log(stations);
 </script>
 
 <div class="board" style:width={"100%"}>
 <div class="board_header">
-  <a href="/"><h1 style="float:left">{station_name+", "+platform}</h1></a>
+  <a href="/"><h1 style="float:left">{station_name}{platform==null?"":", "+platform}</h1></a>
 </div>
 {#if bus_departures.length>0}
 <div class="time-table">

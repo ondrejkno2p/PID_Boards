@@ -55,13 +55,12 @@ export async function GET({ url }) {
     }
 
     const next_stop_info = await (await fetch(url_stop_by_id+next_stop_id, options)).json()
-
     return json(
         {
             delay:position.properties.last_position.delay.actual,
             position:position.geometry.coordinates,
             last_stop:last_stop,
-            type:position.properties.trip.vehicle_type.description_en,
+            type:null,
             next_stop:{
                 time:position.properties.last_position.next_stop.departure_time,
                 id: next_stop_id,

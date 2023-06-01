@@ -5,7 +5,10 @@
   */
   export let departure;
   export let arivals=false;
-  export let size;
+  /**
+     * @type {any}
+     */
+   export let size;
     $: linka = departure.route.short_name;
     $: stanice = departure.trip.headsign;
     $: odjezd=odj(departure);
@@ -23,6 +26,9 @@
         return new Date(dep.departure_timestamp.scheduled);
       }
     }
+  /**
+     * @type {{ last_stop: { id: null; name: any; time: string | number | Date; }; next_stop: { name: any; time: string | number | Date; }; }}
+     */
   let position;
   import {isPhone} from './store';
   async function load_position(){
@@ -54,7 +60,7 @@
     </td>
     {#if !$isPhone}
     <td>
-      {za+" m."}
+      {(Math.floor(za/60)>0?Math.floor(za/60)+" h. ":"")+za%60+" m."}
     </td>
     <td>
     {#if spozdeni.is_available}
@@ -64,29 +70,20 @@
     </td>
     {/if}
 </tr>
+
 {#if info}
+
+<tr class="info" style:font-size={size?"xx-large":"large"}>
+<td></td>
+
 {#if position.last_stop.id == null}
-<tr style:font-size={size?"xx-large":"large"}>
-  <td colspan="3">
-    Zádné informace o spoji
-  </td>
-</tr>
+    <td><a href={"/trip?trip_id="+trip_id}>Detail spoje</a></td><td></td>
 {:else if position.last_stop.id == null}
-<tr style:font-size={size?"xx-large":"large"}>
-  <td colspan="3">
-    Vyrazí z stanice {position.next_stop.name} v {(new Date(position.next_stop.time)).toLocaleTimeString().slice(0,-3)}
-  </td>
-</tr>
+    <td><a href={"/trip?trip_id="+trip_id}>{position.next_stop.name}</a></td><td>{(new Date(position.next_stop.time)).toLocaleTimeString().slice(0,-3)}</td>
 {:else}
-<tr style:font-size={size?"xx-large":"large"}>
-  <td colspan="3">
-    Poslední stanice {position.last_stop.name} v {(new Date(position.last_stop.time)).toLocaleTimeString().slice(0,-3)}
-    <a href={"http://localhost:3333/trip?trip_id="+trip_id}>
-      (detail)
-    </a>
-  </td>
-</tr>
+    <td><a href={"/trip?trip_id="+trip_id}>{position.last_stop.name}</a></td><td>{(new Date(position.last_stop.time)).toLocaleTimeString().slice(0,-3)}</td>    
 {/if}
+</tr>
 {/if}
 <style>
 
@@ -102,6 +99,18 @@
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
     text-align: center;  
+}
+
+tr.info a{
+  color:inherit;
+  text-decoration: inherit;
+  display: block;
+}
+
+tr.info{
+  text-align: center;
+  color:white;
+  background-color: black;
 }
 
 </style>
