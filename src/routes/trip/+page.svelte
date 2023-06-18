@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   const route_type_names=["tram", "metro", "train","bus","ferry","funicular", "trolleybus"]
   import { onMount } from 'svelte';
   import { to_number } from 'svelte/internal';
-  import Clock from '../Clock.svelte';
+  import Clock from '$lib/Clock.svelte';
   export let data;
   let position=data.position
   let interval;
@@ -15,7 +15,7 @@
         position=await(await fetch("/api/position/?trip_id="+trip_id)).json();
 		}, 5000);
   });
-  function good_time(bad_time){
+  function good_time(bad_time:String){
     let shr=bad_time.split(':')[0]
     let hr =to_number(shr)
     hr=hr%24;

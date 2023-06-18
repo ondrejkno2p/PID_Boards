@@ -23,10 +23,6 @@
 		"src/routes/single/+page.ts",
 		"src/routes/+layout.server.ts"
 	],
-	"/test": [
-		"src/routes/test/+page.server.ts",
-		"src/routes/+layout.server.ts"
-	],
 	"/trip": [
 		"src/routes/trip/+page.ts",
 		"src/routes/+layout.server.ts"

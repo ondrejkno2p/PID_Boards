@@ -1,10 +1,10 @@
 <script lang="ts">
-    let bus_departures=[];
+    let bus_departures: string | any[]=[];
     export let data;
     let ids=data.ids;
-    import Departure from "../Departure.svelte";
+    import Departure from "$lib/Departure.svelte";
     import {onDestroy, onMount } from 'svelte';
-    import {store_cookies} from '../cookies'
+    import {store_cookies} from '$lib/cookies'
     import {getCookie} from 'typescript-cookie';
     let load_int:number;
     let arivals=false;
@@ -44,7 +44,7 @@
     onDestroy(() => {
 		clearInterval(load_int);
 	});
-  let stations=[];
+  let stations: any[]=[];
   function load_cookies(){
     let cookie=getCookie('stations');
     if(cookie != undefined && cookie?.length>0) {

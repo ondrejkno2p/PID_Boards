@@ -1,6 +1,6 @@
 import { error,json } from '@sveltejs/kit';
 import { has_prop } from 'svelte/internal';
-import { options, url_table, url_table_arival, url_position,url_stop_by_id} from '../../golem'
+import { options, url_table, url_table_arival, url_position,url_stop_by_id} from '../../../lib/server/golem'
 
 /** @type {import('./$types').RequestHandler} */
 

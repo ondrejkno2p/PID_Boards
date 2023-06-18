@@ -26,7 +26,7 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const DATABASE_URL: string;
+	export const GOLEM_API_KEY: string;
 	export const GJS_DEBUG_TOPICS: string;
 	export const LESSOPEN: string;
 	export const CONDA_PROMPT_MODIFIER: string;
@@ -158,7 +158,7 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		DATABASE_URL: string;
+		GOLEM_API_KEY: string;
 		GJS_DEBUG_TOPICS: string;
 		LESSOPEN: string;
 		CONDA_PROMPT_MODIFIER: string;

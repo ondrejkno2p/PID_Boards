@@ -1,10 +1,10 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import Clock from "./Clock.svelte";
-    import StationBoard from './Station_Board.svelte';
-    import StationPicker from "./Station_Picker.svelte";
+    import Clock from "$lib/Clock.svelte";
+    import StationBoard from '$lib/Station_Board.svelte';
+    import StationPicker from "$lib/Station_Picker.svelte";
     export let bus_departures= new Array;
-    import { sidebar,stations, isPhone} from "./store";
+    import { sidebar,stations, isPhone} from "$lib/store";
     import {getCookie} from 'typescript-cookie';
     import Device from 'svelte-device-info'
     stations.set([])

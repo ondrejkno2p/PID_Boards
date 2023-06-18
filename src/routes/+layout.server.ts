@@ -1,4 +1,4 @@
-import { url_all_stops,options } from './golem';
+import { url_all_stops,options } from '../lib/server/golem';
 
 
 export const load= async() => {
